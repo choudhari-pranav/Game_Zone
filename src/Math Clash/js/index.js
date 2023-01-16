@@ -167,7 +167,7 @@ const updateCurrentSum = () => {
 const checkSum = () => {
   if (currentSum === target) {
     removeAll();
-    shiftValues();
+    // shiftValues();
     updateTarget();
     countScore += currentSum;
     bestScore = Math.max(countScore, bestScore);
@@ -296,13 +296,6 @@ const emptyAllCells = () => {
 };
 
 
-// --------
-
-
-
-
-// ----------------
-
 const generateRandomValues = () => {
   let generatedValues = [];
   for (let i = 0; i < dimenstions; i++) {
@@ -313,10 +306,6 @@ const generateRandomValues = () => {
   }
   board.unshift(generatedValues);
 };
-
-
-
-
 
 
 
@@ -338,6 +327,24 @@ const startTime = (levelTime) => {
     }
   }, levelTime * 1000); // time as per level
 };
+
+
+const delayAtStart = (level_time) => {
+  setTimeout(() => {
+    generateRandomValues();
+    colSize += 1;
+    updateBoard();
+    startTime(level_time);
+  }, 3000); // three second Delay
+};
+
+
+
+
+
+
+
+
 
 
 
@@ -379,11 +386,4 @@ const startTime = (levelTime) => {
 //   shift(1, 0); // j is row and i is col
 // };
 
-const delayAtStart = (level_time) => {
-  setTimeout(() => {
-    generateRandomValues();
-    colSize += 1;
-    updateBoard();
-    startTime(level_time);
-  }, 3000); // three second Delay
-};
+
