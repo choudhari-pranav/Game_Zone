@@ -122,6 +122,50 @@ const createCells = () => {
 	}
 };
 
+const createBoard = () => {
+  board = new Array(no_of_grid)
+    .fill("")
+    .map(() => new Array(no_of_grid).fill(""));
+};
+
+let gameStatus = document.getElementById("game_status");
+
+const handleClick = (el) => {
+  let value = el.innerHTML;
+  if (value !== "" || gameOver) {
+    return;
+  }
+
+  let id = el.id;
+  let i = parseInt(id[0]);
+  let j = parseInt(id[1]);
+
+  board[i][j] = turn % 2 === 0 ? "X" : "O";
+  //console.log(board[i][j]);
+
+  el.style.border = "0px solid gray";
+  el.innerHTML = board[i][j];
+  turnElement.innerHTML = players[turn % 2 === 0 ? 1 : 0];
+  turn++;
+
+  if (isWinner()) {
+    gameOver = true;
+    //document.getElementById('status_main').removeAttribute('class', 'hide');
+    celebrate.click();
+    gameStatus.innerHTML = `${players[turn % 2 === 0 ? 1 : 0]} is the Winner!`;
+    //alert(`${players[turn%2]} is the winner of Game`);
+    return;
+  }
+
+  if (turn === board.length ** 2) {
+    gameOver = true;
+    //document.getElementById('status_main').removeAttribute('class', 'hide');
+    gameStatus.innerHTML = "Game Over";
+    celebrate.click();
+    //alert("Match Draw, Please Try again!");
+    return;
+  }
+};
 
 const isWinner = () => {
   // first check for all rows in board and then for col and then for diagonals
@@ -191,51 +235,6 @@ const isWinner = () => {
   }
 
   return false;
-};
-
-let gameStatus = document.getElementById('game_status');
-
-const handleClick = (el) => {
-	let value = el.innerHTML;
-	if(value !== '' || gameOver) {
-		return;
-	}
-
-	let id = el.id;
-	let i = parseInt(id[0]);
-	let j = parseInt(id[1]);
-
-	board[i][j] = turn % 2 === 0 ? 'X' : 'O';
-	//console.log(board[i][j]);
-
-	el.style.border = '0px solid gray';
-	el.innerHTML = board[i][j];
-	turnElement.innerHTML = players[turn%2 === 0 ? 1 : 0];
-	turn++;
-
-	if(isWinner()) {
-		gameOver = true;
-		//document.getElementById('status_main').removeAttribute('class', 'hide');
-		celebrate.click();
-		gameStatus.innerHTML = `${players[turn%2 === 0 ? 1 : 0]} is the Winner!`;
-		//alert(`${players[turn%2]} is the winner of Game`);
-		return;
-	}
-
-	if(turn === board.length**2) {
-		gameOver = true;
-		//document.getElementById('status_main').removeAttribute('class', 'hide');
-		gameStatus.innerHTML = "Game Over";
-		celebrate.click();
-		//alert("Match Draw, Please Try again!");
-		return;
-	}
-
-};
-
-
-const createBoard = () => {
-	board = new Array(no_of_grid).fill('').map(() => new Array(no_of_grid).fill(''));
 };
 
 const newGame = () => {
